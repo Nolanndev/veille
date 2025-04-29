@@ -138,10 +138,6 @@ h1 {
   max-width: 300px;
   background-color: #242424;
 
-  /* &:hover ~ #cursor-halo {
-    opacity: 0;
-  } */
-
   &:hover {
     outline: 2px solid #535bf2;
     box-shadow: 0px 0px 3px 3px #535bf2;
@@ -202,7 +198,6 @@ footer {
   gap: 30px;
 }
 
-/* for all social containers*/
 .socialContainer {
   z-index: 2;
   width: 52px;
@@ -212,8 +207,9 @@ footer {
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  transition-duration: .3s;
-  border-radius: .5rem;
+  transition-duration: 0.3s;
+  border-radius: 0.5rem;
+  cursor: pointer;
 
   &:hover,
   &:active {
@@ -225,12 +221,48 @@ footer {
   width: 32px;
 }
 
-
-
-
-body {
+.tooltip-container {
   position: relative;
+  display: inline-block;
 }
+
+.tooltip {
+  position: absolute;
+  bottom: 110%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #222;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  font-size: 0.9rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  z-index: 3;
+}
+
+.tooltip-container:hover .tooltip {
+  opacity: 1;
+  transform: translateX(-50%) translateY(-5px);
+  pointer-events: auto;
+}
+
+
+
+/* ===========================================
+//    A    U   U  TTTTT  RRRR   EEEEE   SSS
+//   A A   U   U    T    R   R  E      S
+//  A   A  U   U    T    R   R  EEE     SSS
+//  AAAAA  U   U    T    RRRR   E          S
+//  A   A  U   U    T    R  R   E          S
+//  A   A   UUU     T    R   R  EEEEE  SSSS
+// ===========================================
+// * * * AUTRES */
+
+
 
 #cursor-halo {
   display: none;

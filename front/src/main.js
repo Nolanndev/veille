@@ -4,10 +4,10 @@ const gItems = []
 
 
 document.getElementById('search').addEventListener('input', (e) => {
-	console.log(e.currentTarget.value)
-	console.log(gItems)
-	let t = gItems.filter((item) => item.title.includes(e.currentTarget.value))
-	displayItems(t)
+	if (gItems.length > 0) {
+		let t = gItems.filter((item) => item.title.includes(e.currentTarget.value))
+		displayItems(t)
+	}
 })
 
 function fetchData() {
@@ -15,6 +15,7 @@ function fetchData() {
 		.then(response => response.json())
 		.then(response => {
 			console.log(response)
+			document.getElementById('content-error').style.display = 'none'
 			response.items.forEach(item => {
 				gItems.push({
 					...item,
@@ -24,7 +25,10 @@ function fetchData() {
 			})
 			displayItems(gItems)
 		})
-		.catch(error => console.error(`erreur: ${error}`))
+		.catch(error => {
+			document.getElementById('content-error').style.display = 'block'
+			console.error(`erreur: ${error}`)
+		})
 }
 
 
@@ -35,6 +39,12 @@ function displayItems(items) {
 		appElement.removeChild(appElement.lastChild)
 	}
 
+	if (items.length < 1) {
+		document.getElementById('no-content').style.display = 'block'
+		return
+	}
+
+	document.getElementById('no-content').style.display = 'none'
 	items.forEach(item => {
 		const itemDiv = document.createElement('div')
 		itemDiv.classList.add('item')
@@ -75,13 +85,12 @@ fetchData()
 
 
 
-
-
-const halo = document.getElementById('cursor-halo');
-halo.style.display = 'block'
-document.addEventListener('mousemove', (e) => {
-  halo.style.left = `${e.clientX}px`;
-  halo.style.top = `${e.clientY}px`;
-});
+// Halo de lumière autour de la souris
+// const halo = document.getElementById('cursor-halo');
+// halo.style.display = 'block'
+// document.addEventListener('mousemove', (e) => {
+//   halo.style.left = `${e.clientX}px`;
+//   halo.style.top = `${e.clientY}px`;
+// });
 
 
