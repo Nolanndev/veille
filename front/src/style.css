@@ -1,0 +1,245 @@
+:root {
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1.5;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.8);
+  background-color: #242424;
+}
+
+body {
+  position: relative;
+
+  &::selection {
+    color: red;
+    background-color: yellow;
+  }
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+
+a:hover {
+  color: #535bf2;
+}
+
+
+h1 {
+  text-align: center;
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+
+
+/* ================================================================
+//  RRRR   EEEEE   CCC   H   H  EEEEE  RRRR    CCC   H   H  EEEEE
+//  R   R  E      C   C  H   H  E      R   R  C   C  H   H  E
+//  R   R  EEE    C      HHHHH  EEE    R   R  C      HHHHH  EEE
+//  RRRR   E      C      H   H  E      RRRR   C      H   H  E
+//  R  R   E      C   C  H   H  E      R  R   C   C  H   H  E
+//  R   R  EEEEE   CCC   H   H  EEEEE  R   R   CCC   H   H  EEEEE
+// ================================================================
+// * * * RECHERCHE ET FILTRES */
+
+
+
+#formContainer {
+  padding: 2rem 0;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+#search {
+  border: 2px solid #505050;
+  padding: 1rem;
+  width: 30%;
+  border-radius: .3rem;
+  font-size: medium;
+  outline: none;
+  z-index: 2;
+
+  &:hover {
+    border-color: #535bf2;
+  }
+
+  &:focus,
+  &:active {
+    /* color: #535bf2; */
+    border-color: #535bf2;
+    box-shadow: 2px 2px 15px #535bf2 inset;
+  }
+}
+
+
+
+/* =========================================================
+//  M   M  EEEEE   SSS    SSS     A     GGG   EEEEE   SSS
+//  MM MM  E      S      S       A A   G   G  E      S
+//  M M M  EEE     SSS    SSS   A   A  G      EEE     SSS
+//  M   M  E          S      S  AAAAA  G  GG  E          S
+//  M   M  E          S      S  A   A  G   G  E          S
+//  M   M  EEEEE  SSSS   SSSS   A   A   GGG   EEEEE  SSSS
+// =========================================================
+// * * * MESSAGES */
+
+
+#no-content,
+#content-error {
+  display: none;
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 600;
+}
+
+
+
+/* ==================================================
+//   CCC    OOO   N   N  TTTTT  EEEEE  N   N  U   U
+//  C   C  O   O  NN  N    T    E      NN  N  U   U
+//  C      O   O  N N N    T    EEE    N N N  U   U
+//  C      O   O  N  NN    T    E      N  NN  U   U
+//  C   C  O   O  N   N    T    E      N   N  U   U
+//   CCC    OOO   N   N    T    EEEEE  N   N   UUU
+// ==================================================
+// * * * CONTENU */
+
+
+
+#app {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+  justify-content: center;
+  /* 👈 Centrer les cartes dans la grille */
+  padding: 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  /* 👈 Centrer la grille entière dans la page */
+}
+
+
+
+.item {
+  z-index: 2;
+  border-radius: 10px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 1);
+  max-width: 300px;
+  background-color: #242424;
+
+  /* &:hover ~ #cursor-halo {
+    opacity: 0;
+  } */
+
+  &:hover {
+    outline: 2px solid #535bf2;
+    box-shadow: 0px 0px 3px 3px #535bf2;
+    transition-duration: 0s;
+
+    h3 {
+      color: #535bf2;
+    }
+
+    a svg {
+      fill: #535bf2;
+    }
+  }
+
+  a {
+    width: fit-content;
+
+    & svg {
+      transition: .3s;
+      fill: #505050;
+
+      &:hover,
+      &:active {
+        transform: scale(1.1);
+        fill: #909090;
+      }
+    }
+  }
+
+  .ellipsed {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-clamp: 3;
+    -webkit-line-clamp: 3;
+  }
+}
+
+
+/* ===========================================
+//  FFFFF   OOO    OOO   TTTTT  EEEEE  RRRR
+//  F      O   O  O   O    T    E      R   R
+//  FFF    O   O  O   O    T    EEE    R   R
+//  F      O   O  O   O    T    E      RRRR
+//  F      O   O  O   O    T    E      R  R
+//  F       OOO    OOO     T    EEEEE  R   R
+// ===========================================
+// * * * FOOTER */
+
+
+
+footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 25px 25px;
+  gap: 30px;
+}
+
+/* for all social containers*/
+.socialContainer {
+  z-index: 2;
+  width: 52px;
+  height: 52px;
+  background-color: rgb(44, 44, 44);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition-duration: .3s;
+  border-radius: .5rem;
+
+  &:hover,
+  &:active {
+    transform: scale(1.1);
+  }
+}
+
+.socialSvg {
+  width: 32px;
+}
+
+
+
+
+body {
+  position: relative;
+}
+
+#cursor-halo {
+  display: none;
+  position: fixed;
+  width: 200px;
+  height: 200px;
+  pointer-events: none;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(83, 91, 242, 0.5) 0%, transparent 80%);
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
