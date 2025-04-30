@@ -54,7 +54,8 @@ h1 {
 #formContainer {
   padding: 2rem 0;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
+  gap: 3rem;
 }
 
 #search {
@@ -128,6 +129,7 @@ h1 {
 
 
 .item {
+  margin: auto;
   z-index: 2;
   border-radius: 10px;
   padding: 1rem;
@@ -147,23 +149,36 @@ h1 {
       color: #535bf2;
     }
 
+    .date {
+      color: #909090;
+    }
+
     a svg {
       fill: #535bf2;
     }
   }
 
+  h3 {
+    margin-bottom: 0;
+  }
+
+  .date {
+    margin: 0;
+    font-size: .8rem;
+    color:  #505050;
+  }
+
   a {
     width: fit-content;
+
+    &:hover svg,
+    &:active svg {
+      transform: scale(1.2);
+    }
 
     & svg {
       transition: .3s;
       fill: #505050;
-
-      &:hover,
-      &:active {
-        transform: scale(1.1);
-        fill: #909090;
-      }
     }
   }
 
