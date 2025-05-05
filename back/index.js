@@ -1,9 +1,9 @@
+import cors from 'cors'
 import express from 'express'
 import path from 'path'
-import { fileURLToPath } from 'url'
-import Parser from 'rss-parser'
-import cors from 'cors'
 import RSS from 'rss'
+import Parser from 'rss-parser'
+import { fileURLToPath } from 'url'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -39,8 +39,8 @@ app.get('/rss', async (req, res) => {
     const feed = new RSS({
       title: 'Flux combiné – Nolann',
       description: 'Veille sur Symfony, PHP et automobile',
-      feed_url: 'https://nolannparcheminer.fr/rss',
-      site_url: 'https://nolannparcheminer.fr',
+      feed_url: 'https://veille.nolannparcheminer.fr/rss',
+      site_url: 'https://veille.nolannparcheminer.fr',
       language: 'fr',
       pubDate: new Date()
     })
@@ -68,7 +68,7 @@ app.get('/rss', async (req, res) => {
     allItems.sort((a, b) => new Date(b.date) - new Date(a.date))
 
     // On ne garde que les 20 derniers articles
-    allItems.slice(0, 20).forEach(item => {
+    allItems.slice(0, 15).forEach(item => {
       feed.item(item)
     })
 
@@ -89,19 +89,24 @@ app.get('/api/feed', async (req, res) => {
         const feed = await parser.parseURL(link)
         // results.push({ tag, title: feed.title, items: feed.items.slice(0, 5) }) // on prend les 5 derniers
         for (const item of feed.items) {
-          results.push({
+          let i = {
             feedTitle: feed.title,
             feedLink: feed.link,
             tag: tag,
             ...item
-          })
+          }
+          // console.log(i)
+          results.push(i)
         }
       } catch (e) {
         console.warn(`Erreur de récupération du flux ${link}: ${e.message}`)
       }
     }
 
-    res.json(results)
+    // Tri des items par date (plus récents d’abord)
+    results.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate))
+
+    res.json(results.slice(0, 15))
   } catch (e) {
     res.status(500).json({ error: 'Erreur lors du parsing RSS', details: e.message })
   }

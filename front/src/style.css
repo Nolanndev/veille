@@ -56,16 +56,21 @@ h1 {
   display: flex;
   justify-content: center;
   gap: 3rem;
+  flex-wrap: wrap;
+  /* permet le passage à la ligne */
 }
 
 #search {
   border: 2px solid #505050;
   padding: 1rem;
-  width: 30%;
+  width: 70%;
+  max-width: 600px;
+  min-width: 200px;
   border-radius: .3rem;
   font-size: medium;
   outline: none;
   z-index: 2;
+  transition: width 0.3s ease;
 
   &:hover {
     border-color: #535bf2;
@@ -73,11 +78,28 @@ h1 {
 
   &:focus,
   &:active {
-    /* color: #535bf2; */
     border-color: #535bf2;
     box-shadow: 2px 2px 15px #535bf2 inset;
   }
 }
+
+#sort {
+  padding: 1rem;
+  font-size: medium;
+  border-radius: .3rem;
+  border: 2px solid #505050;
+  min-width: 150px;
+  height: 100%;
+}
+
+/* Responsive : sur les petits écrans (< 600px), input prend 90% */
+@media (max-width: 600px) {
+  #formContainer {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
 
 
 
@@ -92,12 +114,17 @@ h1 {
 // * * * MESSAGES */
 
 
+#loading,
 #no-content,
 #content-error {
-  display: none;
   text-align: center;
   font-size: 2.5rem;
   font-weight: 600;
+}
+
+#no-content,
+#content-error {
+  display: none;
 }
 
 
@@ -117,7 +144,7 @@ h1 {
 #app {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1rem;
+  gap: 4rem;
   justify-content: center;
   /* 👈 Centrer les cartes dans la grille */
   padding: 1rem;
@@ -139,6 +166,7 @@ h1 {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 1);
   max-width: 300px;
   background-color: #242424;
+  height: 100%;
 
   &:hover {
     outline: 2px solid #535bf2;
@@ -165,7 +193,7 @@ h1 {
   .date {
     margin: 0;
     font-size: .8rem;
-    color:  #505050;
+    color: #505050;
   }
 
   a {
@@ -211,6 +239,7 @@ footer {
   justify-content: center;
   padding: 25px 25px;
   gap: 30px;
+  margin-top: 3rem;
 }
 
 .socialContainer {
