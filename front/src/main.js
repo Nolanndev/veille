@@ -31,7 +31,7 @@ function sortItems(filtre = "newToOld") {
 }
 
 function fetchData() {
-	fetch('http://127.0.0.1:3000/api/feed')
+	fetch('https://veille.nolannparcheminer.fr/api/feed')
 		.then(response => response.json())
 		.then(response => {
 			gItems = response
