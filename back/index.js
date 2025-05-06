@@ -4,7 +4,12 @@ import path from 'path'
 import RSS from 'rss'
 import Parser from 'rss-parser'
 import { fileURLToPath } from 'url'
+import {OpenAI} from 'openai'
+import { configDotenv } from 'dotenv'
 
+
+
+configDotenv()
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
@@ -33,6 +38,9 @@ const feeds = [
   // { link: 'https://fr.motor1.com/rss/articles/all/', tag: 'automobile' },
 
 ]
+
+const articles = []
+const summary = ""
 
 app.get('/rss', async (req, res) => {
   try {
@@ -95,7 +103,7 @@ app.get('/api/feed', async (req, res) => {
             tag: tag,
             ...item
           }
-          // console.log(i)
+          articles.push(i)
           results.push(i)
         }
       } catch (e) {
@@ -110,6 +118,26 @@ app.get('/api/feed', async (req, res) => {
   } catch (e) {
     res.status(500).json({ error: 'Erreur lors du parsing RSS', details: e.message })
   }
+})
+
+// Résumé des flux quotidiens
+app.get('/summary', async (req,res) => {
+  if (articles.length < 1) {
+    return res.status(204).send('no content')
+  }
+
+  let prompt = "Ci-dessous une liste d'actualités. Fais un condensé simple et rapide des titres et du contenu en 5/6 lignes. Pas de liste à point, juste du texte. L'objectif est de pouvoir comprendre à quelles actualités on va avoir à faire et de saisir le contexte général.\n\n"
+  articles.forEach(item => {
+    prompt += `Titre: ${item.title}\nContenu: ${item.content}\n\n`
+  })
+
+  const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
+  const chat = await openai.chat.completions.create({
+    messages: [{role: "user", content: prompt}],
+    model: 'gpt-4.1-nano',
+    temperature: 0.7
+  })
+  res.json({message: chat.choices[0].message.content})
 })
 
 // Pour toute autre route, on renvoie index.html (support du routing côté front)
